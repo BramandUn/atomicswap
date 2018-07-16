@@ -244,6 +244,8 @@ with B.  The refund transaction can not be sent until the locktime expires, but
 should be saved in case a refund is necessary.
 
 _Party A runs:_
+
+```btcatomicswap -testnet --rpcuser=randomuser --rpcpass=randompassword initiate <Party B address> <Amount to Swap>```
 ```
 $ btcatomicswap --regtest --rpcuser=<bitcoind_user> --rpcpass=<bitcoind_pass> initiate mqh7yjWX2rrAqkHj3B1JTBJbeSvvMCBWdP 1
 warning: falling back to mempool relay fee policy
@@ -274,6 +276,7 @@ transaction to verify:
 3. The locktime was set to 48 hours in the future
 
 _Party B runs:_
+```btcatomicswap --regtest --rpcuser= --rpcpass= auditcontract <Party_A_Contract_Hash> <Contract_Transaction_Hash>```
 ```
 $ btcatomicswap --regtest --rpcuser=<bitcoind_user> --rpcpass=<bitcoind_pass> auditcontract 6382012088a820053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af8876a9146f9d80594e7e0359bec5058824cd487a3f0c9ba9670431b8385bb17576a914ae53dc0df8d89b2726600cc90dfb9419fe2affea6888ac 0200000001b6e4e374030e6a707c10dd937da630ab837c3c9625f2e833e8e8e82e0e3f5cdf0000000048473044022016bce2c94d65d3e8ae58f4f6af263ca58338ac6a0ccf0d22975be1518fe1507902207e39071e0e0c9c51d867ab82d08caabedf9c341ca5f0cb9c8d7aefca3033940701feffffff02441010240100000017a914791205b2a871d2d7bf8a931eb68f347a20ab8d868700e1f5050000000017a9140b5886633426dacc8329990dd1eb8af5fdcf60978700000000
 Contract address:        2MtHDUDTJ39HuNzFukZBthu3mrJKKXsLKc2
@@ -297,6 +300,8 @@ at this point.  The refund transaction can not be sent until the locktime
 expires, but should be saved in case a refund is necessary.
 
 _Party B runs:_
+
+```$ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> participate <Party_A_Address> <Amount_For_Swap> <Party_A_Secret_Hash>```
 ```
 $ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> participate yNVi1yTAQGkBmiG5yXSUYDjFqn3WDFSsqK 10 053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af
 warning: falling back to mempool relay fee policy
@@ -329,6 +334,7 @@ audits the contract and contract transaction to verify:
 4. The secret hash matches the value previously known
 
 _Party A runs:_
+```$ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> auditcontract <Party_B_Contract_Hash> <Party_B_Contract_Transaction_Hash>```
 ```
 $ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> auditcontract 6382012088a820053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af8876a91417e112bc28f4952c3f92d6ab5725b119924b1f9d67046c69375bb17576a914b04df4e0be908ed7d815b862d7d2e625a3d87a906888ac 0200000000010150fa0de5fc6d67d68005b3016c38d908fbc082cdc711de712a1ccaa9c3db574200000000171600142adaffdb0f3d8620ce44e51cee5b080aa60b48d5feffffff0200ca9a3b0000000017a91401c2f251dc6760aa12b5f2d0cf2d840dcc072aed87d678fafa1600000017a914969a87d464c7adce58a0a4e8cddaca4092cbc65d87024730440220554fbb1ac14e73fa1c5b88a144e963caae9c20de9301c0932c2ab6c6e28b2877022010e3ce717f2ada6c5378012f2151a3f7d1a3eb6af7ae20a301dcaae7143b4b97012102177fba6756f2a9498a95f1b5692be34cb9bc2ff0f55670fb689d87325f1362da00000000
 Contract address:        8eamvP1pRfSaD8xMHUZNZEWch1nFFori7y
@@ -347,6 +353,7 @@ from the Stakenet contract.  This step involves publishing a transaction which
 reveals the secret to B, allowing B to withdraw from the Bitcoin contract.
 
 _Party A runs:_
+```$ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> redeem <Party_B_Contract_Hash> <Party_B_Contract_Transaction_Hash> <Party_A_Secret>```
 ```
 $ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> redeem 6382012088a820053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af8876a91417e112bc28f4952c3f92d6ab5725b119924b1f9d67046c69375bb17576a914b04df4e0be908ed7d815b862d7d2e625a3d87a906888ac 0200000000010150fa0de5fc6d67d68005b3016c38d908fbc082cdc711de712a1ccaa9c3db574200000000171600142adaffdb0f3d8620ce44e51cee5b080aa60b48d5feffffff0200ca9a3b0000000017a91401c2f251dc6760aa12b5f2d0cf2d840dcc072aed87d678fafa1600000017a914969a87d464c7adce58a0a4e8cddaca4092cbc65d87024730440220554fbb1ac14e73fa1c5b88a144e963caae9c20de9301c0932c2ab6c6e28b2877022010e3ce717f2ada6c5378012f2151a3f7d1a3eb6af7ae20a301dcaae7143b4b97012102177fba6756f2a9498a95f1b5692be34cb9bc2ff0f55670fb689d87325f1362da00000000 6489db3b887677a789b6244f4b03c2957b0d3adc13abe502486fa57aceb102d2
 warning: falling back to mempool relay fee policy
@@ -365,6 +372,7 @@ explorer to see when the Stakenet contract output was spent and look up the
 redeeming transaction.
 
 _Party B runs:_
+```$ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> extractsecret <Party_A_Redeem_Transaction_Hash> <Party_A_Secret_Hash>```
 ```
 $ xsnatomicswap --testnet --rpcuser=<xsnd_user> --rpcpass=<xsnd_pass> extractsecret 0200000001177fdbc6ca5eb1e0901ee9816bc58552e09153c8eb7ba3a21bff51ebb31b2d9600000000f048304502210091e06c35787fec69d791702c3951bc8f20133a648f37109a719803a628036e6c0220467fb5755148be259f13b5e5719fb60af9689faf0789502881e6e9387e3e13c101210290d101672e3870c71bf0b4449c417404bd0ee66d32ba502a2527e9bdc8748f11206489db3b887677a789b6244f4b03c2957b0d3adc13abe502486fa57aceb102d2514c616382012088a820053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af8876a91417e112bc28f4952c3f92d6ab5725b119924b1f9d67046c69375bb17576a914b04df4e0be908ed7d815b862d7d2e625a3d87a906888acffffffff01b6c89a3b000000001976a914aba5c61d206d779c90b9da37164d302e5dc11bd388ac6c69375b 053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af
 Secret: 6489db3b887677a789b6244f4b03c2957b0d3adc13abe502486fa57aceb102d2
@@ -373,6 +381,7 @@ Secret: 6489db3b887677a789b6244f4b03c2957b0d3adc13abe502486fa57aceb102d2
 With the secret known, B may redeem from A's Bitcoin contract.
 
 _Party B runs:_
+```$ btcatomicswap --regtest --rpcuser=<bitcoind_user> --rpcpass=<bitcoind_pass> redeem <Party_A_Contract_Hash> <Party_A_Contract_Transaction_Hash> <Party_A_Secret>```
 ```
 $ btcatomicswap --regtest --rpcuser=<bitcoind_user> --rpcpass=<bitcoind_pass> redeem 6382012088a820053c93e0ce63d6e132cf334381a38482ac8981f6bdd178ee493d92b8340997af8876a9146f9d80594e7e0359bec5058824cd487a3f0c9ba9670431b8385bb17576a914ae53dc0df8d89b2726600cc90dfb9419fe2affea6888ac 0200000001b6e4e374030e6a707c10dd937da630ab837c3c9625f2e833e8e8e82e0e3f5cdf0000000048473044022016bce2c94d65d3e8ae58f4f6af263ca58338ac6a0ccf0d22975be1518fe1507902207e39071e0e0c9c51d867ab82d08caabedf9c341ca5f0cb9c8d7aefca3033940701feffffff02441010240100000017a914791205b2a871d2d7bf8a931eb68f347a20ab8d868700e1f5050000000017a9140b5886633426dacc8329990dd1eb8af5fdcf60978700000000 6489db3b887677a789b6244f4b03c2957b0d3adc13abe502486fa57aceb102d2
 warning: falling back to mempool relay fee policy
